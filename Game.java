@@ -6,6 +6,7 @@ public class Game extends Map {
     setTitle("Hunt The Wumpus");
     setLocationRelativeTo(null);
     new Map();
+    new Textfield();
     new MoveShoot();
 
   }
