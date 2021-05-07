@@ -1,11 +1,21 @@
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
+import java.util.*;
 
 public class App extends Frame implements KeyListener {
 
+    Random rand = new Random();
+  
+    int wumpusXRand = rand.nextInt(4);
+    int wumpusYRand = rand.nextInt(4);
+    int pitXRand = rand.nextInt(4);
+    int pitYRand = rand.nextInt(4);
+
     int moveX = 50, moveY = 60;
     int shootX = moveX, shootY = moveY;
-    int wumpusX = 450, wumpusY = 60;
+    int wumpusX = (((wumpusXRand+1) * 100) - 50), wumpusY = (((wumpusYRand+1) * 100) - 40);
+    int pitX = (((pitXRand+1) * 100) - 50), pitY = (((pitYRand+1) * 100) - 40);
 
     int numArrows = 4;
 
@@ -31,6 +41,7 @@ public class App extends Frame implements KeyListener {
                                                                                        // coordinates at the top left
                                                                                        // ex: (x=1, y=2)
         g.drawString("wumpusX=" + (wumpusX - 50 + 100) + ", wumpusY=" + (wumpusY - 60 + 100), 200, 45);
+        g.drawString("pitX=" + (pitX - 50 + 100) + ", pitY=" + (pitY - 60 + 100), 500, 45);
 
         g.drawLine(150, 60, 150, 560); // horzontal and vertical grid lines
         g.drawLine(250, 60, 250, 560);
@@ -60,6 +71,7 @@ public class App extends Frame implements KeyListener {
             moveY = moveY + 100;
             shootY = moveY;
         }
+
     }
 
     void moveLeft() {
@@ -82,72 +94,114 @@ public class App extends Frame implements KeyListener {
         switch (keyCode) {
             case KeyEvent.VK_W:
                 moveUp();
+                if ((moveY) == pitY && (moveX == pitX)) {
+                    System.out.println("You fell in da pit");
+                    //Popup and reset
+                } else if ((moveY) == wumpusY && (moveX == wumpusX)) {
+                    System.out.println("You ran into da Wumpus");
+                    //Popup and reset
+                }
                 break;
             case KeyEvent.VK_S:
                 moveDown();
+                if ((moveY) == pitY && (moveX == pitX)) {
+                    System.out.println("You fell in da pit");
+                    //Popup and reset
+                } else if ((moveY) == wumpusY && (moveX == wumpusX)) {
+                    System.out.println("You ran into da Wumpus");
+                    //Popup and reset
+                }
                 break;
             case KeyEvent.VK_A:
                 moveLeft();
+                if ((moveY) == pitY && (moveX == pitX)) {
+                    System.out.println("You fell in da pit");
+                    //Popup and reset
+                } else if ((moveY) == wumpusY && (moveX == wumpusX)) {
+                    System.out.println("You ran into da Wumpus");
+                    //Popup and reset
+                }
                 break;
             case KeyEvent.VK_D:
                 moveRight();
+                if ((moveY) == pitY && (moveX == pitX)) {
+                    System.out.println("You fell in da pit");
+                    //Popup and reset
+                } else if ((moveY) == wumpusY && (moveX == wumpusX)) {
+                    System.out.println("You ran into da Wumpus");
+                    //Popup and reset
+                }
                 break;
             case KeyEvent.VK_UP:
-
-                System.out.println(shootY);
-                if ((shootY - 100) == wumpusY && (shootX == wumpusX)) {
-                    System.out.println("You hit the Wumpus");
-                    // add victory screen stuff here
+                if (numArrows == 0) {
+                    System.out.println("You cannot shoot, you are out of arrows");
                 } else {
-                    System.out.println("You did not hit the wumpus");
-                    // decrease num arrows
-                    numArrows -= 1;
-                    if (numArrows == 0) {
-                        System.out.println("You ran out of arrows");
+                    if ((shootY - 100) == wumpusY && (shootX == wumpusX)) {
+                        System.out.println("You hit da Wumpus");
+                        //Popup and reset
+                    } else {
+                        System.out.println("You did not hit da wumpus");
+                        // decrease num arrows
+                        numArrows -= 1;
+                        if (numArrows == 0) {
+                            System.out.println("You ran out of arrows");
+                        }
                     }
                 }
                 shootY = moveY;
                 break;
 
             case KeyEvent.VK_DOWN:
-                if ((shootY + 100) == wumpusY && (shootX == wumpusX)) {
-                    System.out.println("You hit the Wumpus");
-                    // add victory screen stuff here
+                if (numArrows == 0) {
+                    System.out.println("You cannot shoot, you are out of arrows");
                 } else {
-                    System.out.println("You did not hit the wumpus");
-                    // decrease num arrows
-                    numArrows -= 1;
-                    if (numArrows == 0) {
-                        System.out.println("You ran out of arrows");
+                    if ((shootY - 100) == wumpusY && (shootX == wumpusX)) {
+                        System.out.println("You hit da Wumpus");
+                        //Popup and reset
+                    } else {
+                        System.out.println("You did not hit da wumpus");
+                        // decrease num arrows
+                        numArrows -= 1;
+                        if (numArrows == 0) {
+                            System.out.println("You ran out of arrows");
+                        }
                     }
                 }
                 shootY = moveY;
                 break;
             case KeyEvent.VK_LEFT:
-                if ((shootY == wumpusY) && ((shootX - 100) == wumpusX)) {
-                    System.out.println("You hit the Wumpus");
-                    // add victory screen stuff here
+                if (numArrows == 0) {
+                    System.out.println("You cannot shoot, you are out of arrows");
                 } else {
-                    System.out.println("You did not hit the wumpus");
-                    // decrease num arrows
-                    numArrows -= 1;
-                    if (numArrows == 0) {
-                        System.out.println("You ran out of arrows");
+                    if ((shootY - 100) == wumpusY && (shootX == wumpusX)) {
+                        System.out.println("You hit da Wumpus");
+                        //Popup and reset
+                    } else {
+                        System.out.println("You did not hit da wumpus");
+                        // decrease num arrows
+                        numArrows -= 1;
+                        if (numArrows == 0) {
+                            System.out.println("You ran out of arrows");
+                        }
                     }
                 }
                 shootY = moveY;
                 break;
 
             case KeyEvent.VK_RIGHT:
-                if ((shootY) == wumpusY && (shootX + 100) == wumpusX) {
-                    System.out.println("You hit the Wumpus");
-                    // add victory screen stuff here
+                if (numArrows == 0) {
+                    System.out.println("You cannot shoot, you are out of arrows");
                 } else {
-                    System.out.println("You did not hit the wumpus");
-                    // decrease num arrows
-                    numArrows -= 1;
-                    if (numArrows == 0) {
-                        System.out.println("You ran out of arrows");
+                    if ((shootY - 100) == wumpusY && (shootX == wumpusX)) {
+                        System.out.println("You hit da Wumpus");
+                        //Popup and reset
+                    } else {
+                        System.out.println("You did not hit da wumpus");
+                        // decrease num arrows
+                        numArrows -= 1;
+                        if (numArrows == 0) {
+                            System.out.println("You ran out of arrows");
+                        }
                     }
                 }
                 shootY = moveY;
