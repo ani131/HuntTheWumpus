@@ -88,6 +88,46 @@ public class App extends Frame implements KeyListener {
         }
     }
 
+    void pit() {
+        JFrame frame = new JFrame("JOptionPane showMessageDialog example");
+    
+        JOptionPane.showMessageDialog(frame,
+            "You fell in da pit. You lose.",
+            "Game over",
+            JOptionPane.ERROR_MESSAGE);
+        System.exit(0);
+      }
+    
+      void wumpus() {
+        JFrame frame = new JFrame("JOptionPane showMessageDialog example");
+    
+        JOptionPane.showMessageDialog(frame,
+            "You were eaten by da Wumpus. You lose.",
+            "Game over",
+            JOptionPane.ERROR_MESSAGE);
+        System.exit(0);
+      }
+    
+      void win() {
+        JFrame frame = new JFrame("JOptionPane showMessageDialog example");
+    
+        JOptionPane.showMessageDialog(frame,
+            "You shot da Wumpus! You win!",
+            "Game over",
+            JOptionPane.ERROR_MESSAGE);
+        System.exit(0);
+      }
+    
+      void bats() {
+        JFrame frame = new JFrame("JOptionPane showMessageDialog example");
+    
+        JOptionPane.showMessageDialog(frame,
+            "You were picked up by bats! You have been moved.",
+            "Bats",
+            JOptionPane.ERROR_MESSAGE);
+        System.exit(0);
+      }
+
     public void keyPressed(KeyEvent ke) { // movement
         int keyCode = ke.getKeyCode();
 
@@ -96,40 +136,40 @@ public class App extends Frame implements KeyListener {
                 moveUp();
                 if ((moveY) == pitY && (moveX == pitX)) {
                     System.out.println("You fell in da pit");
-                    // Popup and reset
+                    pit();
                 } else if ((moveY) == wumpusY && (moveX == wumpusX)) {
                     System.out.println("You ran into da Wumpus");
-                    // Popup and reset
+                    wumpus();
                 }
                 break;
             case KeyEvent.VK_S:
                 moveDown();
                 if ((moveY) == pitY && (moveX == pitX)) {
                     System.out.println("You fell in da pit");
-                    // Popup and reset
+                    pit();
                 } else if ((moveY) == wumpusY && (moveX == wumpusX)) {
                     System.out.println("You ran into da Wumpus");
-                    // Popup and reset
+                    wumpus();
                 }
                 break;
             case KeyEvent.VK_A:
                 moveLeft();
                 if ((moveY) == pitY && (moveX == pitX)) {
                     System.out.println("You fell in da pit");
-                    // Popup and reset
+                    pit();
                 } else if ((moveY) == wumpusY && (moveX == wumpusX)) {
                     System.out.println("You ran into da Wumpus");
-                    // Popup and reset
+                    wumpus();
                 }
                 break;
             case KeyEvent.VK_D:
                 moveRight();
                 if ((moveY) == pitY && (moveX == pitX)) {
                     System.out.println("You fell in da pit");
-                    // Popup and reset
+                    pit();
                 } else if ((moveY) == wumpusY && (moveX == wumpusX)) {
                     System.out.println("You ran into da Wumpus");
-                    // Popup and reset
+                    wumpus();
                 }
                 break;
             case KeyEvent.VK_UP:
@@ -138,7 +178,7 @@ public class App extends Frame implements KeyListener {
                 } else {
                     if ((shootY - 100) == wumpusY && shootX == wumpusX) {
                         System.out.println("You hit da Wumpus");
-                        // Popup and reset
+                        win();
                     } else {
                         System.out.println("You did not hit da wumpus");
                         // decrease num arrows
@@ -157,7 +197,7 @@ public class App extends Frame implements KeyListener {
                 } else {
                     if ((shootY + 100) == wumpusY && shootX == wumpusX) {
                         System.out.println("You hit da Wumpus");
-                        // Popup and reset
+                        win();
                     } else {
                         System.out.println("You did not hit da wumpus");
                         // decrease num arrows
@@ -175,7 +215,7 @@ public class App extends Frame implements KeyListener {
                 } else {
                     if (shootY == wumpusY && (shootX - 100) == wumpusX) {
                         System.out.println("You hit da Wumpus");
-                        // Popup and reset
+                        win();
                     } else {
                         System.out.println("You did not hit da wumpus");
                         // decrease num arrows
@@ -194,7 +234,7 @@ public class App extends Frame implements KeyListener {
                 } else {
                     if (shootY == wumpusY && (shootX + 100) == wumpusX) {
                         System.out.println("You hit da Wumpus");
-                        // Popup and reset
+                        win();
                     } else {
                         System.out.println("You did not hit da wumpus");
                         // decrease num arrows
