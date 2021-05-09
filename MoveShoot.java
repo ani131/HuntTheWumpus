@@ -1,19 +1,23 @@
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
 import java.util.*;
 
 public class MoveShoot extends Frame implements KeyListener {
   Random rand = new Random();
 
-  int wumpusXRand = rand.nextInt(4);
-  int wumpusYRand = rand.nextInt(4);
-  int pitXRand = rand.nextInt(4);
-  int pitYRand = rand.nextInt(4);
+  int wumpusXRand = rand.nextInt(5);
+  int wumpusYRand = rand.nextInt(5);
+  int pitXRand = rand.nextInt(5);
+  int pitYRand = rand.nextInt(5);
+  int batXRand = rand.nextInt(5);
+  int batYRand = rand.nextInt(5);
 
   int moveX = 50, moveY = 60;
   int shootX = moveX, shootY = moveY;
   int wumpusX = (((wumpusXRand + 1) * 100) - 50), wumpusY = (((wumpusYRand + 1) * 100) - 40);
   int pitX = (((pitXRand + 1) * 100) - 50), pitY = (((pitYRand + 1) * 100) - 40);
+  int batX = (((batXRand + 1) * 100) - 50), batY = (((batYRand + 1) * 100) - 40);
 
   int numArrows = 4;
 
@@ -27,6 +31,22 @@ public class MoveShoot extends Frame implements KeyListener {
         System.exit(0);
       }
     });
+
+    while ((pitX == wumpusX) && (pitY == wumpusY)) // these make sure we dont double up locations keep
+    {
+      pitX = ((rand.nextInt(5) + 1) * 100 - 50);
+      pitY = ((rand.nextInt(5) + 1) * 100 - 40);
+    }
+
+    while ((batX == wumpusX) && (batY == wumpusY)) {
+      batX = ((rand.nextInt(5) + 1) * 100 - 50);
+      batY = ((rand.nextInt(5) + 1) * 100 - 40);
+    }
+
+    while ((batX == pitX) && (batY == pitY)) {
+      batX = ((rand.nextInt(5) + 1) * 100 - 50);
+      batY = ((rand.nextInt(5) + 1) * 100 - 40);
+    }
 
   }
 
@@ -59,6 +79,58 @@ public class MoveShoot extends Frame implements KeyListener {
     }
   }
 
+  void pit() {
+    JFrame frame = new JFrame("JOptionPane showMessageDialog example");
+
+    JOptionPane.showMessageDialog(frame, "You fell in da pit. You lose.", "Game over", JOptionPane.ERROR_MESSAGE);
+    System.exit(0);
+  }
+
+  void wumpus() {
+    JFrame frame = new JFrame("JOptionPane showMessageDialog example");
+
+    JOptionPane.showMessageDialog(frame, "You were eaten by da Wumpus. You lose.", "Game over",
+        JOptionPane.ERROR_MESSAGE);
+    System.exit(0);
+  }
+
+  void win() {
+    JFrame frame = new JFrame("JOptionPane showMessageDialog example");
+
+    JOptionPane.showMessageDialog(frame, "You shot da Wumpus! You win!", "Game over", JOptionPane.ERROR_MESSAGE);
+    System.exit(0);
+  }
+
+  void bats() {
+    JFrame frame = new JFrame("JOptionPane showMessageDialog example");
+
+    JOptionPane.showMessageDialog(frame, "You were picked up by bats! You have been moved.", "Bats",
+        JOptionPane.ERROR_MESSAGE);
+    System.exit(0);
+  }
+
+  void relocate() // method to move player to open spot upon bat hit
+  {
+    moveX = ((rand.nextInt(5) + 1) * 100 - 50);
+    moveY = ((rand.nextInt(5) + 1) * 100 - 40);
+
+    while ((moveX == wumpusX) && (moveY == wumpusY)) {
+      moveX = ((rand.nextInt(5) + 1) * 100 - 50);
+      moveY = ((rand.nextInt(5) + 1) * 100 - 40);
+    }
+
+    while ((moveX == pitX) && (moveY == pitY)) {
+      moveX = ((rand.nextInt(5) + 1) * 100 - 50);
+      moveY = ((rand.nextInt(5) + 1) * 100 - 40);
+    }
+
+    while ((moveX == batX) && (moveY == batY)) {
+      moveX = ((rand.nextInt(5) + 1) * 100 - 50);
+      moveY = ((rand.nextInt(5) + 1) * 100 - 40);
+    }
+
+  }
+
   public void keyPressed(KeyEvent ke) { // movement
     int keyCode = ke.getKeyCode();
 
@@ -67,40 +139,52 @@ public class MoveShoot extends Frame implements KeyListener {
         moveUp();
         if ((moveY) == pitY && (moveX == pitX)) {
           System.out.println("You fell in da pit");
-          // Popup and reset
+          pit();
         } else if ((moveY) == wumpusY && (moveX == wumpusX)) {
           System.out.println("You ran into da Wumpus");
-          // Popup and reset
+          wumpus();
+        } else if ((moveY) == batY && (moveX == batX)) { // bat
+          System.out.println("You hit a bat.");
+          relocate();
         }
         break;
       case KeyEvent.VK_S:
         moveDown();
         if ((moveY) == pitY && (moveX == pitX)) {
           System.out.println("You fell in da pit");
-          // Popup and reset
+          pit();
         } else if ((moveY) == wumpusY && (moveX == wumpusX)) {
           System.out.println("You ran into da Wumpus");
-          // Popup and reset
+          wumpus();
+        } else if ((moveY) == batY && (moveX == batX)) { // bat
+          System.out.println("You hit a bat.");
+          relocate();
         }
         break;
       case KeyEvent.VK_A:
         moveLeft();
         if ((moveY) == pitY && (moveX == pitX)) {
           System.out.println("You fell in da pit");
-          // Popup and reset
+          pit();
         } else if ((moveY) == wumpusY && (moveX == wumpusX)) {
           System.out.println("You ran into da Wumpus");
-          // Popup and reset
+          wumpus();
+        } else if ((moveY) == batY && (moveX == batX)) { // bat
+          System.out.println("You hit a bat.");
+          relocate();
         }
         break;
       case KeyEvent.VK_D:
         moveRight();
         if ((moveY) == pitY && (moveX == pitX)) {
           System.out.println("You fell in da pit");
-          // Popup and reset
+          pit();
         } else if ((moveY) == wumpusY && (moveX == wumpusX)) {
           System.out.println("You ran into da Wumpus");
-          // Popup and reset
+          wumpus();
+        } else if ((moveY) == batY && (moveX == batX)) { // bat
+          System.out.println("You hit a bat.");
+          relocate();
         }
         break;
       case KeyEvent.VK_UP:
@@ -109,7 +193,7 @@ public class MoveShoot extends Frame implements KeyListener {
         } else {
           if ((shootY - 100) == wumpusY && shootX == wumpusX) {
             System.out.println("You hit da Wumpus");
-            // Popup and reset
+            win();
           } else {
             System.out.println("You did not hit da wumpus");
             // decrease num arrows
@@ -128,7 +212,7 @@ public class MoveShoot extends Frame implements KeyListener {
         } else {
           if ((shootY + 100) == wumpusY && shootX == wumpusX) {
             System.out.println("You hit da Wumpus");
-            // Popup and reset
+            win();
           } else {
             System.out.println("You did not hit da wumpus");
             // decrease num arrows
@@ -146,7 +230,7 @@ public class MoveShoot extends Frame implements KeyListener {
         } else {
           if (shootY == wumpusY && (shootX - 100) == wumpusX) {
             System.out.println("You hit da Wumpus");
-            // Popup and reset
+            win();
           } else {
             System.out.println("You did not hit da wumpus");
             // decrease num arrows
@@ -165,7 +249,7 @@ public class MoveShoot extends Frame implements KeyListener {
         } else {
           if (shootY == wumpusY && (shootX + 100) == wumpusX) {
             System.out.println("You hit da Wumpus");
-            // Popup and reset
+            win();
           } else {
             System.out.println("You did not hit da wumpus");
             // decrease num arrows

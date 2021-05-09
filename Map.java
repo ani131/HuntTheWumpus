@@ -7,6 +7,39 @@ public class Map extends MoveShoot {
                                                                                    // ex: (x=1, y=2)
     g.drawString("wumpusX=" + (wumpusX - 50 + 100) + ", wumpusY=" + (wumpusY - 60 + 100), 200, 45);
     g.drawString("pitX=" + (pitX - 50 + 100) + ", pitY=" + (pitY - 60 + 100), 500, 45);
+    g.drawString("batX=" + (batX - 50 + 100) + ", batY=" + (batY - 60 + 100), 700, 45);
+
+    g.drawRect(600, 60, 270, 150);
+
+    if (numArrows == 0) {
+      g.drawString("You can not shoot. You are out of arrows", 605, 200);
+    } else {
+      g.drawString("Number of arrows left: " + numArrows, 605, 200);
+    }
+
+    if ((Math.abs(moveX - wumpusX)) == 100 && (Math.abs(moveY - wumpusY) == 100)) {
+      g.drawString("You smell a Wumpus nearby.", 605, 75);
+    } else if ((Math.abs(moveX - wumpusX)) == 100 && (Math.abs(moveY - wumpusY) == 0)) {
+      g.drawString("You smell a Wumpus nearby.", 605, 75);
+    } else if ((Math.abs(moveX - wumpusX)) == 0 && (Math.abs(moveY - wumpusY) == 100)) {
+      g.drawString("You smell a Wumpus nearby.", 605, 75);
+    }
+
+    if ((Math.abs(moveX - pitX)) == 100 && (Math.abs(moveY - pitY) == 100)) {
+      g.drawString("You feel a breeze.", 605, 100);
+    } else if ((Math.abs(moveX - pitX)) == 100 && (Math.abs(moveY - pitY) == 0)) {
+      g.drawString("You feel a breeze.", 605, 100);
+    } else if ((Math.abs(moveX - pitX)) == 0 && (Math.abs(moveY - pitY) == 100)) {
+      g.drawString("You feel a breeze.", 605, 100);
+    }
+
+    if ((Math.abs(moveX - batX)) == 100 && (Math.abs(moveY - batY) == 100)) {
+      g.drawString("You hear flapping.", 605, 125);
+    } else if ((Math.abs(moveX - batX)) == 100 && (Math.abs(moveY - batY) == 0)) {
+      g.drawString("You hear flapping.", 605, 125);
+    } else if ((Math.abs(moveX - batX)) == 0 && (Math.abs(moveY - batY) == 100)) {
+      g.drawString("You hear flapping.", 605, 125);
+    }
 
     g.drawLine(150, 60, 150, 560); // horzontal and vertical grid lines
     g.drawLine(250, 60, 250, 560);
@@ -23,4 +56,5 @@ public class Map extends MoveShoot {
     g.fillRect(moveX, moveY, 100, 100);
 
   }
+
 }
