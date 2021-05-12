@@ -148,6 +148,7 @@ public class MoveShoot extends Frame implements KeyListener {
           relocate();
         }
         break;
+
       case KeyEvent.VK_S:
         moveDown();
         if ((moveY) == pitY && (moveX == pitX)) {
@@ -159,6 +160,7 @@ public class MoveShoot extends Frame implements KeyListener {
         } else if ((moveY) == batY && (moveX == batX)) { // bat
           System.out.println("You hit a bat.");
           relocate();
+
         }
         break;
       case KeyEvent.VK_A:
