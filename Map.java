@@ -11,20 +11,11 @@ public class Map extends MoveShoot {
 
     g.drawString("x=" + (moveX - 50 + 100) + ", y=" + (moveY - 60 + 100), 40, 45); // 50 to offset x and 60 to offset y
 
-    // g.drawString("wumpusX=" + (wumpusX - 50 + 100) + ", wumpusY=" + (wumpusY - 60
-    // + 100), 200, 45);
-    // g.drawString("pitX=" + (pitX - 50 + 100) + ", pitY=" + (pitY - 60 + 100),
-    // 500, 45);
-    // g.drawString("batX=" + (batX - 50 + 100) + ", batY=" + (batY - 60 + 100),
-    // 700, 45);
-
-    g.drawString(text, 605, 400);
-
     // Draw rectangle outline of the grid map
 
     g.drawRect(600, 60, 270, 150);
 
-    //
+    // Logic to sense the wumpus/pit/bats for surrounding blocks
 
     if ((Math.abs(moveX - wumpusX)) == 100 && (Math.abs(moveY - wumpusY) == 100)) {
       g.drawString("You smell a Wumpus nearby.", 605, 75);
@@ -68,10 +59,12 @@ public class Map extends MoveShoot {
     g.setColor(Color.CYAN);
     g.fillRect(moveX, moveY, 100, 100);
 
+    // Black text for the strings on the screen
+
     g.setColor(Color.BLACK);
 
-    // Display number of arrows/moves left and trigger the following methods if they
-    // run out
+    // Displays number of arrows & moves left
+    // Triggers the following methods if they there are 0 moves or 0 arrows left
 
     if (numArrows == 0) {
       noArrows();
@@ -84,6 +77,13 @@ public class Map extends MoveShoot {
     } else {
       g.drawString("Number of moves left: " + numMoves, 605, 175);
     }
+
+    // Basic on screen instructions while playing
+
+    g.drawString("Use WASD to move and the arrow keys to shoot!", 605, 250);
+    g.drawString("Goal: Kill the wumpus while avoiding the pit and bats!", 590, 300);
+
+    g.drawString(text, 605, 400);
 
   }
 

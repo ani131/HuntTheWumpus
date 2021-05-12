@@ -180,14 +180,14 @@ public class MoveShoot extends Frame implements KeyListener {
   void pit() {
     JFrame frame = new JFrame("JOptionPane showMessageDialog example");
 
-    JOptionPane.showMessageDialog(frame, "You fell in da pit. You lose.", "Game over", JOptionPane.ERROR_MESSAGE);
+    JOptionPane.showMessageDialog(frame, "You fell in the pit. You lose.", "Game over", JOptionPane.ERROR_MESSAGE);
     setVisible(false);
   }
 
   void wumpus() {
     JFrame frame = new JFrame("JOptionPane showMessageDialog example");
 
-    JOptionPane.showMessageDialog(frame, "You were eaten by da Wumpus. You lose.", "Game over",
+    JOptionPane.showMessageDialog(frame, "You were eaten by the Wumpus. You lose.", "Game over",
         JOptionPane.ERROR_MESSAGE);
     setVisible(false);
   }
@@ -195,15 +195,7 @@ public class MoveShoot extends Frame implements KeyListener {
   void win() {
     JFrame frame = new JFrame("JOptionPane showMessageDialog example");
 
-    JOptionPane.showMessageDialog(frame, "You shot da Wumpus! You win!", "Game over", JOptionPane.PLAIN_MESSAGE);
-    setVisible(false);
-  }
-
-  void bats() {
-    JFrame frame = new JFrame("JOptionPane showMessageDialog example");
-
-    JOptionPane.showMessageDialog(frame, "You were picked up by bats! You have been moved.", "Bats",
-        JOptionPane.ERROR_MESSAGE);
+    JOptionPane.showMessageDialog(frame, "You shot the Wumpus! You win!", "Game over", JOptionPane.PLAIN_MESSAGE);
     setVisible(false);
   }
 
@@ -232,7 +224,15 @@ public class MoveShoot extends Frame implements KeyListener {
 
   }
 
-  public void keyPressed(KeyEvent ke) { // movement
+  // These cases are used for movement and indicators for the textbox. Each time
+  // you press W, A, S, or D, it calls the corresponding up, down, left, or right
+  // method which changes the players X and Y values moving it around. It also
+  // checks to see if the newly moved player is on the same spot as the pit,
+  // Wumpus, or bats in which case it calls the corresponding method to relocate
+  // or end the game. Then it trasmits a value to Map.java which prints out any
+  // necessary events.
+
+  public void keyPressed(KeyEvent ke) {
     int keyCode = ke.getKeyCode();
 
     switch (keyCode) {
@@ -240,16 +240,13 @@ public class MoveShoot extends Frame implements KeyListener {
         moveUp();
         numMoves -= 1;
         if ((moveY) == pitY && (moveX == pitX)) {
-          text = "You fell in da pit";
-          System.out.println("You fell in da pit");
+          text = "You fell in the pit";
           pit();
         } else if ((moveY) == wumpusY && (moveX == wumpusX)) {
-          text = "You ran into da Wumpus";
-          System.out.println("You ran into da Wumpus");
+          text = "You ran into the Wumpus";
           wumpus();
         } else if ((moveY) == batY && (moveX == batX)) { // bat
           text = "You hit a bat";
-          System.out.println("You hit a bat");
           relocate();
         }
         break;
@@ -258,16 +255,13 @@ public class MoveShoot extends Frame implements KeyListener {
         moveDown();
         numMoves -= 1;
         if ((moveY) == pitY && (moveX == pitX)) {
-          text = "You fell in da pit";
-          System.out.println("You fell in da pit");
+          text = "You fell in the pit";
           pit();
         } else if ((moveY) == wumpusY && (moveX == wumpusX)) {
-          text = "You ran into da Wumpus";
-          System.out.println("You ran into da Wumpus");
+          text = "You ran into the Wumpus";
           wumpus();
         } else if ((moveY) == batY && (moveX == batX)) { // bat
           text = "You hit a bat";
-          System.out.println("You hit a bat.");
           relocate();
 
         }
@@ -276,16 +270,13 @@ public class MoveShoot extends Frame implements KeyListener {
         moveLeft();
         numMoves -= 1;
         if ((moveY) == pitY && (moveX == pitX)) {
-          text = "You fell in da pit";
-          System.out.println("You fell in da pit");
+          text = "You fell in the pit";
           pit();
         } else if ((moveY) == wumpusY && (moveX == wumpusX)) {
-          text = "You ran into da Wumpus";
-          System.out.println("You ran into da Wumpus");
+          text = "You ran into the Wumpus";
           wumpus();
         } else if ((moveY) == batY && (moveX == batX)) { // bat
           text = "You hit a bat";
-          System.out.println("You hit a bat.");
           relocate();
         }
         break;
@@ -293,108 +284,89 @@ public class MoveShoot extends Frame implements KeyListener {
         moveRight();
         numMoves -= 1;
         if ((moveY) == pitY && (moveX == pitX)) {
-          text = "You fell in da pit";
-          System.out.println("You fell in da pit");
+          text = "You fell in the pit";
           pit();
         } else if ((moveY) == wumpusY && (moveX == wumpusX)) {
-          text = "You ran into da Wumpus";
-          System.out.println("You ran into da Wumpus");
+          text = "You ran into the Wumpus";
           wumpus();
         } else if ((moveY) == batY && (moveX == batX)) { // bat
           text = "You hit a bat";
-          System.out.println("You hit a bat.");
           relocate();
         }
         break;
+
+      // These cases are used for shooting and indicators for the textbox. Each time
+      // you press the up, down, left, or right keys it changes the shoot coordinates
+      // for the player and then checks to see if that new shoot value is on the same
+      // spot as the Wumpus. If it is, it runs the win() method which ends the game.
+      // If the player misses, it decreases 1 arrow for the number of arrows, moves
+      // the Wumpus with moveWumpus() and checks if the player is out of arrows in
+      // which case it ends the game.
+
       case KeyEvent.VK_UP:
-        if (numArrows == 0) {
-          System.out.println("You cannot shoot, you are out of arrows");
+
+        if ((shootY - 100) == wumpusY && shootX == wumpusX) {
+          text = "You hit the Wumpus";
+          win();
         } else {
-          if ((shootY - 100) == wumpusY && shootX == wumpusX) {
-            text = "You hit da Wumpus";
-            System.out.println("You hit da Wumpus");
-            win();
-          } else {
-            text = "You did not hit da wumpus";
-            moveWumpus();
-            System.out.println("You did not hit da wumpus");
-            // decrease num arrows
-            numArrows -= 1;
-            if (numArrows == 0) {
-              text = "You ran out of arrows";
-              System.out.println("You ran out of arrows");
-            }
+          text = "You did not hit the Wumpus";
+          moveWumpus();
+          numArrows -= 1;
+          if (numArrows == 0) {
+            text = "You ran out of arrows";
           }
         }
+
         shootY = moveY;
         break;
 
       case KeyEvent.VK_DOWN:
-        if (numArrows == 0) {
 
-          System.out.println("You cannot shoot, you are out of arrows");
+        if ((shootY + 100) == wumpusY && shootX == wumpusX) {
+          text = "You hit the Wumpus";
+          win();
         } else {
-          if ((shootY + 100) == wumpusY && shootX == wumpusX) {
-            text = "You hit da Wumpus";
-            System.out.println("You hit da Wumpus");
-            win();
-          } else {
-            moveWumpus();
-            System.out.println("You did not hit da wumpus");
-            text = "You did not hit da wumpus";
-            // decrease num arrows
-            numArrows -= 1;
-            if (numArrows == 0) {
-              text = "You ran out of arrows";
-              System.out.println("You ran out of arrows");
-            }
+          moveWumpus();
+          text = "You did not hit the Wumpus";
+          numArrows -= 1;
+          if (numArrows == 0) {
+            text = "You ran out of arrows";
           }
         }
+
         shootY = moveY;
         break;
       case KeyEvent.VK_LEFT:
-        if (numArrows == 0) {
-          System.out.println("You cannot shoot, you are out of arrows");
+
+        if (shootY == wumpusY && (shootX - 100) == wumpusX) {
+          text = "You hit the Wumpus";
+          win();
         } else {
-          if (shootY == wumpusY && (shootX - 100) == wumpusX) {
-            text = "You hit da Wumpus";
-            System.out.println("You hit da Wumpus");
-            win();
-          } else {
-            text = "You did not hit da wumpus";
-            moveWumpus();
-            System.out.println("You did not hit da wumpus");
-            // decrease num arrows
-            numArrows -= 1;
-            if (numArrows == 0) {
-              text = "You ran out of arrows";
-              System.out.println("You ran out of arrows");
-            }
+          text = "You did not hit the Wumpus";
+          moveWumpus();
+          numArrows -= 1;
+          if (numArrows == 0) {
+            text = "You ran out of arrows";
           }
         }
+
         shootY = moveY;
         break;
 
       case KeyEvent.VK_RIGHT:
-        if (numArrows == 0) {
-          System.out.println("You cannot shoot, you are out of arrows");
+
+        if (shootY == wumpusY && (shootX + 100) == wumpusX) {
+          text = "You hit the Wumpus";
+          win();
         } else {
-          if (shootY == wumpusY && (shootX + 100) == wumpusX) {
-            text = "You hit da Wumpus";
-            System.out.println("You hit da Wumpus");
-            win();
-          } else {
-            text = "You did not hit da wumpus";
-            moveWumpus();
-            System.out.println("You did not hit da wumpus");
-            // decrease num arrows
-            numArrows -= 1;
-            if (numArrows == 0) {
-              text = "You ran out of arrows";
-              System.out.println("You ran out of arrows");
-            }
+          text = "You did not hit the Wumpus";
+          moveWumpus();
+          numArrows -= 1;
+          if (numArrows == 0) {
+            text = "You ran out of arrows";
           }
         }
+
         shootY = moveY;
         break;
     }

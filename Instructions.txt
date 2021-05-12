@@ -1,0 +1,13 @@
+To run the program, navigate to App.java and run the main method. 
+
+Once you run it, a screen should pop up with buttons saying “Instructions”, “Easy”, “Medium”, 
+and “Hard”. 
+
+If you are unfamiliar with the game, click instructions, read them thoroughly, 
+and then close the instructions tab. Then select the button associated with the 
+gamemode you want to choose. Once selected the game should pop up and you can play as 
+instructed. 
+
+Once you finish the game, it will close and you can choose to play the 
+same gamemode or pick a new one. You can also choose to revisit the instructions as needed.
+
